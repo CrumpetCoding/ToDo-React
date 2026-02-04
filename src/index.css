@@ -1,0 +1,92 @@
+body {
+  display: flex;
+  justify-content: center;
+  background-color: #3F51B5;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.todo-app {
+  position: relative;
+  width: 400px;
+  border-color: #BDBDBD;
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 15px;
+  padding: 20px;
+  background-color: white;
+  text-align: center;
+}
+
+input {
+  border-radius: 5px;
+  border-width: 1px;
+  font-weight: bold;
+  text-indent: 5%;
+  height: 20px;
+  color: #757575;
+}
+
+button {
+  border-radius: 5px;
+  background-color: #448AFF;
+  width: 50px;
+  font-weight: bold;
+  border-width: 1px;
+  height: 20px;
+  color: white;
+}
+
+ul {
+  margin: 10px;
+  padding: 10px;
+}
+
+ul li {
+  gap: 4px;
+  padding-top: 10px;
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  margin: 0;
+  word-wrap: break-word;
+  word-break: break-all;
+  border-style: solid;
+  border-color: #BDBDBD;
+  border-radius: 5px;
+  border-width: 2px;
+  padding: 5px;
+  margin: 5px;
+}
+
+.actionIcon {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 0px;
+  width: 22px;
+  background: lightgray;
+  border-radius: 4px;
+  height: 22px;
+}
+
+button:hover {
+  background-color: #7faeff;
+  cursor: pointer;
+}
+
+#delete:hover {
+  background-color: red;
+  color: white;
+  cursor: pointer;
+}
+
+#complete:hover {
+  background-color: green;
+  color: white;
+  cursor: pointer;
+}
+
+.textItem {
+  flex: 1;
+  text-align: left;
+}
