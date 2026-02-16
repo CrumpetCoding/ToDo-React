@@ -1,38 +1,58 @@
-import { useState } from "react";
-import { getToDos } from "./todos";
+import { useState, useRef, useEffect } from "react";
+import { getToDos, saveItems, type ToDoItem } from "./todos";
 
 function App() {
   const [toDos, setToDos] = useState(getToDos());
   const [inputText, setInputText] = useState("");
+  const [errorText, setErrorText] = useState("");
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  // type in the textbox "hello"
-  // Set up the button so when you click it, it will:
-  // you want to create a custom function to do it in one to be easier to read
+  // Watching whenever the todos are changing, then automatically save them to local storage
+  useEffect(() => saveItems(toDos), [toDos]);
+
   function addItem() {
-    // 1. Add a new items to the todos state array (using the setToDos([...toDos, { text: inputText, id: blah, isCompleted: false }]))
-    // 2. Clear the textbox (using the setInputText(""))
-    // 3. Focus the input again
+    if (inputText.trim() === "") {
+      setErrorText("Please enter a valid text");
+      return;
+    }
 
-    // Add a console log checking it works
+    setErrorText("");
+
+    const newTodo: ToDoItem = {
+      text: inputText,
+      id: crypto.randomUUID(),
+      isCompleted: false,
+    };
+    setToDos([...toDos, newTodo]);
+    setInputText("");
+    inputRef.current?.focus();
+  }
+
+  function onInputKeyUp(key: string) {
+    if (key === "Enter") {
+      addItem();
+    }
   }
 
   return (
     <>
       <div className="container">
-        <p>Input text: '{inputText}'</p>
         <div className="todo-app">
           <h1>To Do List</h1>
           <div className="input">
+            <p>Error: {errorText}</p>
             <input
               type="text"
-              id="text-box"
+              ref={inputRef}
               placeholder="add your text"
               value={inputText}
               onChange={(e) => setInputText(e.target.value)}
+              onKeyUp={(e) => onInputKeyUp(e.key)}
             />
-            {/* <button onclick="addItem()">Add</button> */}
+            <button onClick={() => addItem()}>Add</button>
           </div>
           <ul id="list-items">
+            <code>{toDos.toString()}</code>
             {/* Loop through all the todo items and spit out them as <li> with just the text, nothing else */}
           </ul>
         </div>

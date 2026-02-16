@@ -1,4 +1,4 @@
-type ToDoItem = {
+export type ToDoItem = {
     text: string,
     isCompleted: boolean,
     id: string,
