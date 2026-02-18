@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { getToDos, saveItems, type ToDoItem } from "./todos";
+import TodoListItem from "./components/TodoListItem";
 
 function App() {
   const [toDos, setToDos] = useState(getToDos());
@@ -34,13 +35,25 @@ function App() {
     }
   }
 
+  function deleteItem(todoId: string) {
+    const filteredToDos = toDos.filter(t => t.id !== todoId);
+    setToDos(filteredToDos);
+  }
+
+  function toggleStatus(todoId: string) {
+    const mappedToDos = toDos.map(t => t.id === todoId
+      ? { ...t, isCompleted: !t.isCompleted }
+      : t);
+    setToDos(mappedToDos);
+  }
+
   return (
     <>
       <div className="container">
         <div className="todo-app">
           <h1>To Do List</h1>
           <div className="input">
-            <p>Error: {errorText}</p>
+            {errorText && <p>Error: {errorText}</p>}
             <input
               type="text"
               ref={inputRef}
@@ -52,16 +65,19 @@ function App() {
             <button onClick={() => addItem()}>Add</button>
           </div>
           <ul id="list-items">
-            <code>{toDos.toString()}</code>
+            {toDos.length > 0
+              ? toDos.map(t =>
+                <TodoListItem
+                  key={t.id}
+                  item={t}
+                  deleteItem={(i) => deleteItem(i)}
+                  toggleStatus={(i) => toggleStatus(i)}
+                />)
+              : (<p>No items yet</p>)}
             {/* Loop through all the todo items and spit out them as <li> with just the text, nothing else */}
           </ul>
         </div>
       </div>
-      {/* <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-      </div> */}
     </>
   );
 }
