@@ -1,3 +1,4 @@
+import { Button } from "primereact/button";
 import type { ToDoItem } from "../todos";
 
 type Props = {
@@ -14,12 +15,12 @@ function TodoListItem({ item, deleteItem, toggleStatus }: Props) {
     const itemClasses = ["todo-item-text", item.isCompleted ? "completed" : ""];
     return (
         <li>
-            <span className={itemClasses.join(" ")}>
+            < span className={itemClasses.join(" ")} >
                 {item.text}
-            </span>
-            <span className="actionIcon" onClick={() => deleteItem(item.id)}>🗑️</span>
-            <span className="actionIcon" onClick={() => toggleStatus(item.id)}>{item.isCompleted ? checked : empty}</span>
-        </li>
+            </span >
+            <Button className="actionIcon" icon="pi pi-times" rounded outlined aria-label="Cancel" onClick={() => deleteItem(item.id)} />
+            <Button className="actionIcon" icon="pi pi-check" rounded outlined aria-label="Filter" onClick={() => toggleStatus(item.id)} />
+        </li >
     );
 }
 
