@@ -91,34 +91,3 @@ button:hover {
   flex: 1;
   text-align: left;
 }
-
-.todo-item-text {
-  margin-right: auto;
-  position: relative;
-  height: 100%;
-}
-
-.todo-item-text.completed {
-  color: grey;
-}
-
-.todo-item-text.completed::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 50%;
-  width: 100%;
-  height: 2px;
-  background-color: grey;
-  animation: strike-through 0.5s ease-out forwards;
-}
-
-@keyframes strike-through {
-  from {
-    width: 0;
-  }
-
-  to {
-    width: 100%;
-  }
-}

@@ -3,7 +3,7 @@ import { getToDos, saveItems, type ToDoItem } from "../todos";
 import TodoListItem from "./TodoListItem";
 import { Button } from "primereact/button";
 import { Card } from "primereact/card";
-
+import { InputText } from "primereact/inputtext";
 
 function TodoApp() {
     const [toDos, setToDos] = useState(getToDos());
@@ -13,6 +13,10 @@ function TodoApp() {
 
     // Watching whenever the todos are changing, then automatically save them to local storage
     useEffect(() => saveItems(toDos), [toDos]);
+
+    useEffect(() => {
+        inputRef.current?.focus();
+    }, []);
 
     function addItem() {
         if (inputText.trim() === "") {
@@ -53,21 +57,26 @@ function TodoApp() {
     return (
         <>
             <div className="grid">
-                <Card id="app-container" className="col-6 col-offset-3">
+                <Card id="app-container" className="col-12 md:col-8 md:col-offset-2 lg:col-6 lg:col-offset-3">
                     <h1 className="text-center">To Do List</h1>
+                    {/* TODO: Update this to display on a new row on it's own. Use an Message component for the error */}
+                    {errorText && <p>Error: {errorText}</p>}
                     <div className="flex justify-content-center align-items-center gap-1">
-                        {errorText && <p>Error: {errorText}</p>}
-                        <input
+                        <InputText
                             type="text"
                             ref={inputRef}
-                            placeholder="add your text"
+                            placeholder="Add a new task..."
                             value={inputText}
                             onChange={(e) => setInputText(e.target.value)}
                             onKeyUp={(e) => onInputKeyUp(e.key)}
                         />
-                        <Button label="Add" className="h-1rem" outlined onClick={() => addItem()} />
+
+                        <Button label="Add" icon="pi pi-plus" onClick={() => addItem()} />
                     </div>
-                    <ul id="list-items" className="col-6 col-offset-3 list-none text-left">
+                    <ul
+                        id="list-items"
+                        className="col-12 list-none text-left"
+                    >
                         {toDos.length > 0
                             ? toDos.map(t =>
                                 <TodoListItem
